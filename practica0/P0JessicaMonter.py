@@ -4,13 +4,21 @@ from numpy.linalg import inv
 import matplotlib as mpl
 from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
+
+#Equipo
+#Jessica Monter Gallardo
+#Carlos Iván Barrientos López
+
+
+
 #Ejercicio 1
 
 #Funcion que permite al usuario introducir los valores de los vectores de la base a ortonormalizar
 def entradaVectores():
-	v1 = raw_input("Introduzca las entradas del primer vector separadas por espacios\n").split()
-	v2 = raw_input("Introduzca las entradas del segundo vector separadas por espacios\n").split()
-	v3 = raw_input("Introduzca las entradas del tercer vector separadas por espacios\n").split()
+	print "ORTONORMALIZACION EN R3\n"
+	v1 = raw_input("Introduzca las entradas del primer vector separadas por espacios, ej. 1 2 3\n").split()
+	v2 = raw_input("Introduzca las entradas del segundo vector separadas por espacios, ej. 1 2 3\n").split()
+	v3 = raw_input("Introduzca las entradas del tercer vector separadas por espacios, ej. 1 2 3\n").split()
 	v1 = map(float, v1)
 	v2 = map(float, v2)
 	v3 = map(float, v3)
@@ -29,28 +37,29 @@ def creaMatriz(v1, v2, v3):
 def proyeccion(v1, v2):
     return (np.dot(v1,v2) / np.dot(v1,v1)) * v1
 
+
+#Funcion que crea la grafica de los vectores contenidos en las matrices.
 def graph(mA, mB):
 
-	soa = np.array([[0, 0, 1, 1, -2, 0], [0, 0, 2, 1, 1, 0],
-                [0, 0, 3, 2, 1, 0], [0, 0, 4, 0.5, 0.7, 0]])
-
-	X, Y, Z, U, V, W = zip(*soa)
+	X, Y, Z, U, V, W = mA[0], mA[1], mA[2], mB[0], mB[1], mB[2]
 	fig = plt.figure()
+	fig.suptitle('Rojo: Vectores iniciales, Azul: Vectores ortonormales', fontsize=12)
 	ax = fig.add_subplot(111, projection='3d')
-	ax.quiver(X, Y, Z, U, V, W)
+
+	ax.quiver(0, 0, 0, X, Y, Z, color='r', pivot='tail')
+	ax.quiver(0, 0, 0, U, V, W, color='b', pivot='tail')
+
 	ax.set_xlim([-1, 1])
 	ax.set_ylim([-1, 1])
 	ax.set_zlim([-1, 1])
+
+	ax.set_xlabel('X')
+	ax.set_ylabel('Y')
+	ax.set_zlabel('Z')
+
+	
 	plt.show()
 
-	# X, Y, Z, U, V, W = mA[0], mA[1], mA[2], mB[0], mB[1], mB[2]
-	# fig = plt.figure()
-	# ax = fig.add_subplot(111, projection='3d')
-	# ax.quiver(X, Y, Z, U, V, W, color='r')
-	# ax.set_xlim([-1, 1])
-	# ax.set_ylim([-1, 1])
-	# ax.set_zlim([-1, 1])
-	# plt.show()
 
 
 #Funcion que implementa el metodo de Gram-Schmidt para R3
@@ -75,7 +84,10 @@ def primerEjercicio():
 		resultado = gramSchmidt(V)
 		print("Los vectores ortonormalizados son: \n")
 		imprimeMatriz(resultado)
-		graph(V,resultado)
+		matrix = creaMatriz(V[0]*(1/np.linalg.norm(V[0])),V[1]*(1/np.linalg.norm(V[1])),V[2]*(1/np.linalg.norm(V[2])))
+
+		graph(matrix,resultado)
+
 	return 0
 
 #Ejercicio 2    
@@ -154,18 +166,11 @@ def seleccionMenores(mA, valor):
 
 #Funcion que manda a llamar las funciones de operaciones con matrices
 def segundoEjercicio():
-
+	print "OPERACIONES CON MATRICES\n"
 	dimension = randint(2,7)
 	mA = np.random.randint(-10,11,size=(dimension,dimension))
 	mB = np.random.randint(-10,11,size=(dimension,dimension))
 
-	#mA = np.random.randint(-10,10,size=(2,2))
-	#mB = np.random.randint(-10,10,size=(2,2))
-
-	#mA = generaMatriz()
-	print mA.shape[1]
-	#mB = generaMatriz()
-	print mB.shape[1]
 
 	print "Matriz A"
 	imprimeMatriz(mA)
@@ -204,4 +209,4 @@ def segundoEjercicio():
 
 
 primerEjercicio()
-#segundoEjercicio()
+segundoEjercicio()
