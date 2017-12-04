@@ -88,15 +88,13 @@ def ejemplo(iters=1000, ca=0.3):
     X = P[:,1:3]
     Xn = normalize(X)
     Xn = append( ones( (len(Xn),1) ), Xn, axis=1 )
-    #print X
     Y = P[:,-1]
-    #print Y
     W0 = ranf((3,))
     error_i = J(W0, Xn, Y)
-    print "Descenso en w0={0}, w1={1}, w2={2},  error={3}".format(W0[0],W0[1],W0[2], error_i)
+    print (("Descenso en w0={0}, w1={1}, w2={2},  error={3}").format(W0[0],W0[1],W0[2], error_i))
     Wf, costos = grad_desc( W0, Xn, Y, ca, iters )
     error_f = J(Wf,Xn, Y)
-    print "Después de {0} iteraciones W_0={1}, W_1={2}, W_2={3}, error={4}".format(iters, Wf[0],Wf[1],Wf[2] ,error_f)
+    print (("Después de {0} iteraciones W_0={1}, W_1={2}, W_2={3}, error={4}").format(iters, Wf[0],Wf[1],Wf[2] ,error_f))
     graph(costos, costos, 2.1, 3.4)
 
 
